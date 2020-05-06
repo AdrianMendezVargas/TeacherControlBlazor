@@ -1,0 +1,119 @@
+﻿@page "/Estudiantes"
+@page "/Estudiantes/{EstudianteId:int}"
+
+@using Models
+@*@inject IToastService toast*@
+<EditForm Model="Estudiante" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de Estudiantes</h3>
+        </div>
+        <div class="card-body">
+            <form>
+
+                @*EstudianteId*@
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>EstudianteId</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="Estudiante.EstudianteId" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="BuscarAsync">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Nombres*@
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <InputText @bind-Value="Estudiante.Nombres" class="form-control" />
+                    <ValidationMessage For="@(() => Estudiante.Nombres)" />
+                </div>
+
+                @*Semestre*@
+                <div class="form-group">
+                    <label>Semestre</label>
+                    <InputNumber @bind-Value="Estudiante.Semestre" class="form-control" />
+                    <ValidationMessage For="@(() => Estudiante.Semestre)" />
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success">Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int EstudianteId { get; set; }
+
+    private Estudiantes Estudiante = new Estudiantes();
+
+    //protected override async Task OnInitializedAsync()
+    //{
+
+    //    Nuevo(); //siempre se hace nuevo
+
+    //    await BuscarAsync(); //solo hace efecto si se paso un id por parametro
+    //}
+
+    public void Nuevo()
+    {
+        Estudiante = new Estudiantes();
+    }
+
+
+    private async Task BuscarAsync()
+    {
+        if (this.EstudianteId > 0)
+        {
+            //var encontrado = await ClientesBLL.BuscarAsync(dbContext, this.ClienteId);
+
+            //if (encontrado != null)
+            //    this.Cliente = encontrado;
+            //else
+            //    toast.ShowWarning("No encontrado");
+        }
+    }
+
+    public async Task Guardar()
+    {
+        string mensaje;
+
+        //mensaje = await ClientesBLL.Guardar(dbContext, Cliente);
+
+        //if (String.IsNullOrWhiteSpace(mensaje))
+        //{
+        //    Nuevo();
+        //    toast.ShowSuccess("Guardado correctamente");
+        //}
+        //else
+        //    toast.ShowError(mensaje);
+    }
+
+    public async Task Eliminar()
+    {
+        string mensaje;
+
+        //mensaje = await ClientesBLL.Eliminar(dbContext, Cliente);
+
+        //if (String.IsNullOrWhiteSpace(mensaje))
+        //{
+        //    Nuevo();
+        //    toast.ShowSuccess("Eliminado correctamente");
+        //}
+        //else
+        //    toast.ShowError(mensaje);
+    }
+
+
+}
