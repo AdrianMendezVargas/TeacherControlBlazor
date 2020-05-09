@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using TeacherControlWPF.DAL;
+using TeacherControl.DAL;
 using System.Collections.Generic;
-using TeacherControlWPF.Entidades;
 using Microsoft.EntityFrameworkCore;
+using TeacherControl.Models;
 
-namespace TeacherControlWPF.BLL
+namespace TeacherControl.BLL
 {
     public class EstudiantesBLL
     {

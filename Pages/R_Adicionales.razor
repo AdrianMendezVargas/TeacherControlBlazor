@@ -1,5 +1,5 @@
 ﻿@page "/Adicionales"
-@page "/Adiconales{AdicionalId}"
+@page "/Adiconales/{AdicionalId:int}"
 
 @using Models
 @*@inject IToastService toast*@
@@ -71,7 +71,7 @@
 
     public void Nuevo()
     {
-
+        Adicional = new Adicionales();
     }
 
     public void Guardar()

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TeacherControlWPF.Entidades;
+using TeacherControl.Models;
 
-namespace TeacherControlWPF.DAL
+namespace TeacherControl.DAL
 {
     public class Contexto : DbContext
     {

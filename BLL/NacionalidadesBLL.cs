@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TeacherControlWPF.DAL;
-using TeacherControlWPF.Entidades;
+using TeacherControl.Models;
+using TeacherControl.DAL;
 
-namespace TeacherControlWPF.BLL
+namespace TeacherControl.BLL
 {
     public class NacionalidadesBLL
     {

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using TeacherControl.Models;
-using TeacherControlWPF.DAL;
-using TeacherControlWPF.Entidades;
+using TeacherControl.DAL;
 
-namespace TeacherControlWPF.BLL
+
+namespace TeacherControl.BLL
 {
     public class AdicionalesBLL
     {

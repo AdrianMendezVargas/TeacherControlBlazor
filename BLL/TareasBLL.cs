@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeacherControlWPF.Entidades;
-using TeacherControlWPF.DAL;
+using TeacherControl.DAL;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
+using TeacherControl.Models;
 
-namespace TeacherControlWPF.BLL
+namespace TeacherControl.BLL
 {
     public class TareasBLL
     {
