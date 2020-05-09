@@ -24,5 +24,7 @@ namespace TeacherControlWPF.DAL
                 NacionalidadId=1,
                 Nacionalidad="Dominicana"});
         }
+
+     
     }
 }
