@@ -1,0 +1,92 @@
+﻿@page "/Adicionales"
+@page "/Adiconales/{AdicionalId:int}"
+
+@using Models
+@*@inject IToastService toast*@
+<EditForm Model="Adicional" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de Puntos Adicionales</h3>
+        </div>
+        <div class="card-body">
+            <form>
+
+                @*AdicionalId*@
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>EstudianteId</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="Adicional.AdicionalId" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Fecha*@
+                <div class="form-group">
+                    <label>Fecha:</label>
+                    <InputDate @bind-Value="Adicional.Fecha" class="form-control" />
+                    <ValidationMessage For="@(() => Adicional.Fecha)" />
+                </div>
+
+                @*Estudiante*@
+                <div class="form-group">
+                    <label>Estudiante:</label>
+                    <InputSelect @bind-Value="Adicional.EstudianteId" class="form-control" />
+                    <ValidationMessage For="@(() => Adicional.EstudianteId)" />
+                </div>
+
+
+                @*Puntos*@
+                <div class="form-group">
+                    <label>Puntos:</label>
+                    <InputNumber @bind-Value="Adicional.Puntos" class="form-control" />
+                    <ValidationMessage For="@(() => Adicional.Puntos)" />
+                </div>
+
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success">Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int AdicionalId { get; set; }
+
+    private Adicionales Adicional = new Adicionales();
+
+   
+
+    public void Nuevo()
+    {
+        Adicional = new Adicionales();
+    }
+
+    public void Guardar()
+    {
+
+    }
+
+    public void Buscar()
+    {
+
+    }
+
+    public void Eliminar()
+    {
+
+    }
+}
