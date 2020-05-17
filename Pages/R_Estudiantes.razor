@@ -2,7 +2,8 @@
 @page "/Estudiantes/{EstudianteId:int}"
 
 @using Models
-@*@inject IToastService toast*@
+@inject IToastService toast
+
 <EditForm Model="Estudiante" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <div class="card">
@@ -20,7 +21,7 @@
                             <div class="input-group">
                                 <InputNumber @bind-Value="Estudiante.EstudianteId" class="form-control col-4" />
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary input-group-text" @onclick="BuscarAsync">Buscar</button>
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -58,13 +59,13 @@
 
     private Estudiantes Estudiante = new Estudiantes();
 
-    //protected override async Task OnInitializedAsync()
-    //{
+    protected override void OnInitialized()
+    {
 
-    //    Nuevo(); //siempre se hace nuevo
+        Nuevo(); //siempre se hace nuevo
 
-    //    await BuscarAsync(); //solo hace efecto si se paso un id por parametro
-    //}
+        Buscar(); //solo hace efecto si se paso un id por parametro
+    }
 
     public void Nuevo()
     {
@@ -72,47 +73,48 @@
     }
 
 
-    private async Task BuscarAsync()
+    private void Buscar()
     {
-        if (this.EstudianteId > 0)
+        if (Estudiante.EstudianteId > 0)
         {
-            //var encontrado = await ClientesBLL.BuscarAsync(dbContext, this.ClienteId);
+            var encontrado = EstudiantesBLL.Buscar(Estudiante.EstudianteId);
 
-            //if (encontrado != null)
-            //    this.Cliente = encontrado;
-            //else
-            //    toast.ShowWarning("No encontrado");
+            if (encontrado != null)
+                this.Estudiante = encontrado;
+            else
+                toast.ShowWarning("No encontrado");
         }
     }
 
-    public async Task Guardar()
+    public void Guardar()
     {
-        string mensaje;
+        bool guardo;
 
-        //mensaje = await ClientesBLL.Guardar(dbContext, Cliente);
+        Estudiante.NacionalidadId = 1;
+        guardo =   EstudiantesBLL.Guardar( Estudiante);
 
-        //if (String.IsNullOrWhiteSpace(mensaje))
-        //{
-        //    Nuevo();
-        //    toast.ShowSuccess("Guardado correctamente");
-        //}
-        //else
-        //    toast.ShowError(mensaje);
+        if (guardo)
+        {
+            Nuevo();
+            toast.ShowSuccess("Guardado correctamente");
+        }
+        else
+            toast.ShowError("No fue posible guardar");
     }
 
-    public async Task Eliminar()
+    public void Eliminar()
     {
-        string mensaje;
+        bool elimino;
 
-        //mensaje = await ClientesBLL.Eliminar(dbContext, Cliente);
+        elimino =   EstudiantesBLL.Eliminar(  Estudiante.EstudianteId);
 
-        //if (String.IsNullOrWhiteSpace(mensaje))
-        //{
-        //    Nuevo();
-        //    toast.ShowSuccess("Eliminado correctamente");
-        //}
-        //else
-        //    toast.ShowError(mensaje);
+        if (elimino)
+        {
+            Nuevo();
+            toast.ShowSuccess("Eliminado correctamente");
+        }
+        else
+            toast.ShowError("No fue posible eliminar");
     }
 
 
