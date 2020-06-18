@@ -12,6 +12,7 @@ namespace TeacherControl.DAL
         public DbSet<Estudiantes> Estudiantes { get; set; }
         public DbSet<Tareas> Tareas { get; set; }
         public DbSet<Adicionales> Adicionales { get; set; }
+        public DbSet<TiposTelefonos> TiposTelefonos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,6 +24,18 @@ namespace TeacherControl.DAL
             modelBuilder.Entity<Nacionalidades>().HasData(new Nacionalidades { 
                 NacionalidadId=1,
                 Nacionalidad="Dominicana"});
+
+            modelBuilder.Entity<TiposTelefonos>().HasData(new TiposTelefonos
+            {
+                TipoId = 1,
+                Descripcion = "Casa"
+            });
+
+            modelBuilder.Entity<TiposTelefonos>().HasData(new TiposTelefonos
+            {
+                TipoId = 2,
+                Descripcion = "Celular"
+            });
         }
 
      

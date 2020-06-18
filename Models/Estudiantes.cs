@@ -22,5 +22,25 @@ namespace TeacherControl.Models
 
         [ForeignKey("NacionalidadId")]
         public virtual Nacionalidades Nacionalidad { get; set; }
+
+        [ForeignKey("EstudianteId")]
+        public virtual List<EstudiantesDetalle> EstudiantesDetalle { get; set; } = new List<EstudiantesDetalle>();
+
+    }
+
+    public class EstudiantesDetalle
+    {
+        [Key]
+        public int  Id { get; set; }
+ 
+        public int EstudianteId { get; set; }
+      
+        public int TipoId { get; set; }
+
+        [ForeignKey("TipoId")]
+        public TiposTelefonos TipoTelefono { get; set; }
+
+        public string Telefono { get; set; }
+
     }
 }

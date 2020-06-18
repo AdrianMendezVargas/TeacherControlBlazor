@@ -60,6 +60,13 @@ namespace TeacherControl.BLL
 
             try
             {
+                contexto.Database.ExecuteSqlRaw($"Delete FROM EstudiantesDetalle Where EstudianteId = {estudiante.EstudianteId}");
+
+                foreach (var item in estudiante.EstudiantesDetalle)
+                {
+                    contexto.Entry(item).State = EntityState.Added;
+                }
+
                 //marcar la entidad como modificada para que el contexto sepa como proceder
                 contexto.Entry(estudiante).State = EntityState.Modified;
                 paso = contexto.SaveChanges() > 0;
@@ -117,7 +124,10 @@ namespace TeacherControl.BLL
 
             try
             {
-                estudiante = contexto.Estudiantes.Find(id);
+                estudiante = contexto.Estudiantes
+                    .Where(e => e.EstudianteId == id)
+                    .Include(e => e.EstudiantesDetalle)
+                    .FirstOrDefault();
             }
             catch (Exception)
             {

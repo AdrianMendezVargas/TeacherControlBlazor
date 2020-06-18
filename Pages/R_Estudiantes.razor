@@ -1,7 +1,6 @@
 ﻿@page "/Estudiantes"
 @page "/Estudiantes/{EstudianteId:int}"
 
-@using Models
 @inject IToastService toast
 
 <EditForm Model="Estudiante" OnValidSubmit="Guardar">
@@ -12,7 +11,6 @@
         </div>
         <div class="card-body">
             <form>
-
                 @*EstudianteId*@
                 <div class="form-row align-items-center">
                     <div class="col">
@@ -38,9 +36,51 @@
                 @*Semestre*@
                 <div class="form-group">
                     <label>Semestre</label>
-                    <InputNumber @bind-Value="Estudiante.Semestre" class="form-control" />
+                    <InputNumber @bind-Value="Estudiante.Semestre"
+                                 class="form-control" />
                     <ValidationMessage For="@(() => Estudiante.Semestre)" />
                 </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label>Tipo</label>
+                        <InputSelect @bind-Value="TipoSeleccionado" class="form-control">
+                            <option value="1">Casa</option>
+                            <option value="2">Celular</option>
+                        </InputSelect>
+                    </div>
+
+                    <div class="form-group col">
+                        <label>Telefono</label>
+                        <div class="input-group">
+                            <InputText @bind-Value="TelefonoSeleccionado" class="form-control" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" @onclick="AgregarDetalle">
+                                    <i class="oi oi-plus" aria-hidden="true" /> Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Detalle*@
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Telefono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Estudiante.EstudiantesDetalle)
+                        {
+                            <tr>
+                                <td>@item.TipoId</td>
+                                <td>@item.Telefono</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
             </form>
         </div>
         <div class="card-footer">
@@ -58,10 +98,11 @@
     public int EstudianteId { get; set; }
 
     private Estudiantes Estudiante = new Estudiantes();
+    private string TipoSeleccionado = "0";
+    private string TelefonoSeleccionado;
 
     protected override void OnInitialized()
     {
-
         Nuevo(); //siempre se hace nuevo
 
         Buscar(); //solo hace efecto si se paso un id por parametro
@@ -72,6 +113,15 @@
         Estudiante = new Estudiantes();
     }
 
+    private void AgregarDetalle()
+    {
+        Estudiante.EstudiantesDetalle.Add(new EstudiantesDetalle
+        {
+            TipoId = Convert.ToInt32(TipoSeleccionado),
+            Telefono = TelefonoSeleccionado
+        });
+
+    }
 
     private void Buscar()
     {
@@ -91,7 +141,7 @@
         bool guardo;
 
         Estudiante.NacionalidadId = 1;
-        guardo =   EstudiantesBLL.Guardar( Estudiante);
+        guardo = EstudiantesBLL.Guardar(Estudiante);
 
         if (guardo)
         {
@@ -106,7 +156,7 @@
     {
         bool elimino;
 
-        elimino =   EstudiantesBLL.Eliminar(  Estudiante.EstudianteId);
+        elimino = EstudiantesBLL.Eliminar(Estudiante.EstudianteId);
 
         if (elimino)
         {

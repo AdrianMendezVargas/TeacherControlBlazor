@@ -59,6 +59,30 @@ namespace TeacherControl.Migrations
                     b.ToTable("Estudiantes");
                 });
 
+            modelBuilder.Entity("TeacherControl.Models.EstudiantesDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EstudianteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TipoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EstudianteId");
+
+                    b.HasIndex("TipoId");
+
+                    b.ToTable("EstudiantesDetalle");
+                });
+
             modelBuilder.Entity("TeacherControl.Models.Nacionalidades", b =>
                 {
                     b.Property<int>("NacionalidadId")
@@ -122,11 +146,52 @@ namespace TeacherControl.Migrations
                     b.ToTable("TareasDetalle");
                 });
 
+            modelBuilder.Entity("TeacherControl.Models.TiposTelefonos", b =>
+                {
+                    b.Property<int>("TipoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TipoId");
+
+                    b.ToTable("TiposTelefonos");
+
+                    b.HasData(
+                        new
+                        {
+                            TipoId = 1,
+                            Descripcion = "Casa"
+                        },
+                        new
+                        {
+                            TipoId = 2,
+                            Descripcion = "Celular"
+                        });
+                });
+
             modelBuilder.Entity("TeacherControl.Models.Estudiantes", b =>
                 {
                     b.HasOne("TeacherControl.Models.Nacionalidades", "Nacionalidad")
                         .WithMany()
                         .HasForeignKey("NacionalidadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TeacherControl.Models.EstudiantesDetalle", b =>
+                {
+                    b.HasOne("TeacherControl.Models.Estudiantes", null)
+                        .WithMany("EstudiantesDetalle")
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TeacherControl.Models.TiposTelefonos", "TipoTelefono")
+                        .WithMany()
+                        .HasForeignKey("TipoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

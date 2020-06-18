@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TeacherControl.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,6 +51,19 @@ namespace TeacherControl.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TiposTelefonos",
+                columns: table => new
+                {
+                    TipoId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Descripcion = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TiposTelefonos", x => x.TipoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Estudiantes",
                 columns: table => new
                 {
@@ -92,15 +105,62 @@ namespace TeacherControl.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EstudiantesDetalle",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EstudianteId = table.Column<int>(nullable: false),
+                    TipoId = table.Column<int>(nullable: false),
+                    Telefono = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EstudiantesDetalle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EstudiantesDetalle_Estudiantes_EstudianteId",
+                        column: x => x.EstudianteId,
+                        principalTable: "Estudiantes",
+                        principalColumn: "EstudianteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EstudiantesDetalle_TiposTelefonos_TipoId",
+                        column: x => x.TipoId,
+                        principalTable: "TiposTelefonos",
+                        principalColumn: "TipoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Nacionalidades",
                 columns: new[] { "NacionalidadId", "Nacionalidad" },
                 values: new object[] { 1, "Dominicana" });
 
+            migrationBuilder.InsertData(
+                table: "TiposTelefonos",
+                columns: new[] { "TipoId", "Descripcion" },
+                values: new object[] { 1, "Casa" });
+
+            migrationBuilder.InsertData(
+                table: "TiposTelefonos",
+                columns: new[] { "TipoId", "Descripcion" },
+                values: new object[] { 2, "Celular" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Estudiantes_NacionalidadId",
                 table: "Estudiantes",
                 column: "NacionalidadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EstudiantesDetalle_EstudianteId",
+                table: "EstudiantesDetalle",
+                column: "EstudianteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EstudiantesDetalle_TipoId",
+                table: "EstudiantesDetalle",
+                column: "TipoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TareasDetalle_TareaId",
@@ -114,16 +174,22 @@ namespace TeacherControl.Migrations
                 name: "Adicionales");
 
             migrationBuilder.DropTable(
-                name: "Estudiantes");
+                name: "EstudiantesDetalle");
 
             migrationBuilder.DropTable(
                 name: "TareasDetalle");
 
             migrationBuilder.DropTable(
-                name: "Nacionalidades");
+                name: "Estudiantes");
+
+            migrationBuilder.DropTable(
+                name: "TiposTelefonos");
 
             migrationBuilder.DropTable(
                 name: "Tareas");
+
+            migrationBuilder.DropTable(
+                name: "Nacionalidades");
         }
     }
 }
